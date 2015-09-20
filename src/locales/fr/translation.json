@@ -1,0 +1,103 @@
+{
+    "app": {
+        "disconnect": "Déconnexion",
+        "connect": "Connexion",
+        "send": "Envoyer",
+        "cancel": "Annuler",
+        "config": "Configuration",
+        "configShort": "Config",
+        "url": "Url complète de redmine (avec http://)",
+        "apiKey": "Clé d'api",
+        "idleTime": "Durée avant détection de l'inactivité (min)",
+        "durationMinutes": "Durée (min)",
+        "yes": "Oui",
+        "no": "Non",
+        "choose": "Choisissez une option"
+    },
+    
+    "auth": {
+        "error": {
+            "invalidCredentials": "Identifiants invalides"
+        }
+    },
+
+    "language": {
+        "default": "Langue par défaut",
+        "choose": "Choisissez une langue",
+        "restart": "Veuillez redemarrer pour appliquer la langue",
+        "locale": {
+            "french": "Français",
+            "english": "Anglais"
+        }
+    },
+
+    "theme": {
+        "choose": "Choisissez un thème",
+        "default": "Thème par défaut",
+        "themes": {
+            "default": "Original",
+            "blue": "Blue",
+            "slime": "Slime"
+        }
+    },
+
+    "issue": {
+        "id": "Id",
+        "title": "Libellé",
+        "status": "Statut",
+        "lastUpdate": "Mis à jour le",
+        "author": "Auteur",
+        "yourIssues": "Vos demandes",
+        "latestIssues": "Vos %d dernières demandes",
+        "loading": "Chargement des demandes",
+        "search": "Rechercher",
+        "loadingSearch": "Rechercher",
+        "placeholder": "Id de la tâche",
+        "getByIdError": "La tâche d'existe pas",
+        "filter": {
+            "title": "Filtre de vos demandes",
+            "assignedTo": "Assigné à",
+            "all": "Tous",
+            "yoursOnly": "N'afficher que vos demandes"
+        }
+    },
+
+    "tracker": {
+        "chooseATracker": "Choisissez un tracker"
+    },
+
+    "project": {
+        "choose": "Choisissez un projet",
+        "loading": "Chargement des projets",
+        "yourProjects": "Vos projets"
+    },
+
+    "status": {
+        "choose": "Choisissez un statut"
+    },
+
+    "comment": {
+        "added": "Commentaire ajouté",
+        "add": "Ajouter un commentaire",
+        "send": "Envoyer",
+        "sent": "Commentaire envoyé",
+        "pending": "Envoi en cours"
+    },
+
+    "chrono": {
+        "choose": "Choisissez une activité",
+        "saved": "Le temps a été mis à jour (%s)",
+        "idleMessage": "Du temps a été enregistré pendant une periode d'inactivité",
+        "error": {
+            "alreadyCounting": "Une saisie est déjà en cours",
+            "invalidId": "L'id de la tâche ou du projet est invalide",
+            "forbiddenType": "Type de donnée non autorisée",
+            "saveError": "Une erreur est apparue lors de l'enregistrement du temps [%s]"
+        }
+    },
+
+    "activity": {
+        "default": "Activité par défaut",
+        "choose": "Choisissez une activité"
+    }
+}

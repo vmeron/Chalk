@@ -1,0 +1,22 @@
+.loader {
+    padding: 25px 0;
+
+    p {
+        margin-bottom: 0;
+        /* Workaround for repaint bug on chrome */
+        -webkit-transform: translate3d(0,0,0)!important;
+    }
+}
+
+.refreshSmall {
+    background-color: transparent;
+    border: none;
+
+    a {
+        border:none;
+    }
+
+    img{
+        max-width:20px;
+    }
+}

@@ -1,0 +1,11 @@
+.fadeIn {
+    opacity: 1;
+    //height: auto;
+    @include single-transition(all, 250ms, ease-in-out);
+}
+
+.fadeOut {
+    opacity: 0;
+    //height: 0;
+    @include single-transition(all, 250ms, ease-in-out);
+}

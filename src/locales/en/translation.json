@@ -1,0 +1,104 @@
+{
+    "app": {
+        "disconnect": "Disconnect",
+        "connect": "Connect",
+        "send": "Send",
+        "cancel": "Cancel",
+        "config": "Preferences",
+        "configShort": "Prefs",
+        "url": "Redmine full URL (with http://)",
+        "apiKey": "Api key",
+        "idleTime": "Idle state detection delay (min)",
+        "durationMinutes": "Duration (min)",
+        "yes": "Yes",
+        "no": "No",
+        "choose": "Choose an option"
+    },
+
+    "auth": {
+        "error": {
+            "invalidCredentials": "Invalid credentials"
+        }
+    },
+
+    "language": {
+        "default": "Default language",
+        "choose": "Choose a language",
+        "restart": "Please restart app to set new language",
+        "locale": {
+            "french": "French",
+            "english": "English"
+        }
+    },
+
+    "theme": {
+        "choose": "Choose a theme",
+        "default": "Default theme",
+        "themes": {
+            "default": "Original",
+            "blue": "Blue",
+            "slime": "Slime"
+        }
+    },
+
+    "issue": {
+        "id": "Id",
+        "title": "Title",
+        "status": "Status",
+        "lastUpdate": "Updated at",
+        "author": "Author",
+        "yourIssues": "Your issues",
+        "latestIssues": "Your %d latest issues",
+        "loading": "Loading issues",
+        "search": "Search",
+        "loadingSearch": "Search",
+        "placeholder": "Task Id",
+        "getByIdError": "Issue does not exist",
+        "filter": {
+            "title": "Issue filter",
+            "assignedTo": "Assigned to",
+            "all": "All users",
+            "yoursOnly": "Dipsplay only your issues"
+        }
+    },
+
+    "tracker": {
+        "chooseATracker": "Choose a tracker"
+    },
+
+    "project": {
+        "choose": "Choose a project",
+        "loading": "Loading",
+        "yourProjects": "Your projects"
+    },
+
+    "status": {
+        "choose": "Choose a status"
+    },
+
+    "comment": {
+        "added": "Comment added",
+        "add": "Add comment",
+        "send": "Send",
+        "sent": "Comment sent",
+        "pending": "Sending comment"
+    },
+
+    "chrono": {
+        "choose": "Choose an activity",
+        "saved": "Time saved (%s)",
+        "idleMessage": "Time was recorded while idle",
+        "error": {
+            "alreadyCounting": "Chono is already playing",
+            "invalidId": "Invalid issue id",
+            "forbiddenType": "Invalid type",
+            "saveError": "An error has occured while saving [%s]",
+            "": ""
+        }
+    },
+
+    "activity": {
+        "default": "Default activity",
+        "choose": "Choose an activity"
+    }
+}

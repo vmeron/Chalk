@@ -1,0 +1,56 @@
+.amaran.default {
+    background:#000;
+    min-height: 25px;
+
+    .default-spinner {
+        width: 25px;
+        min-height: 25px;
+        color: #000;
+        
+        span {
+            width: 18px;
+            height: 18px;
+            display: block;
+            text-align: center;
+            color: #FFF;
+
+        }
+        .fa {
+            display: inline;
+            /*padding-left: 4px;*/
+        }
+    }
+    .default-message
+    {
+        span {
+            line-height: 23px;
+        }
+    }
+
+    &.error {
+        .default-spinner {
+            span {
+                background-color: #F00;
+                color:#FFF;
+            }
+        }
+    }
+
+    &.info {
+        .default-spinner {
+            span {
+                background-color: #37d4ff;
+                color:#FFF;
+            }
+        }
+    }
+
+    &.warn {
+        .default-spinner {
+            span {
+                background-color: #ffec00;
+                color: #000;
+            }
+        }
+    }
+}

@@ -1,0 +1,48 @@
+/**
+ * Chrono
+ */
+#chrono{
+    .alert-box {
+        display: none;
+        a {
+            color: #FFF;
+            text-decoration: underline;
+        }
+    }
+
+    .panel ul {
+        list-style: none;
+
+        li {
+            font-size:0.7em;
+
+            &.project {
+                font-weight: bold;
+            }
+        }
+    }
+
+    .led {
+        background-color: $oil;
+        font-size:3em;
+        font-family: LED;
+        font-weight: 200;
+        color:#FFF;
+        
+        i {
+            color:#FFF;
+        }
+        
+        &.fa-pause {
+            color:$orange;
+        }
+    }
+
+    #chronoComments button {
+        min-height: 50px;
+    }
+}
+
+.reveal-modal, dialog {
+    padding: 0.1rem;
+}

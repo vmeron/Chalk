@@ -1,0 +1,42 @@
+table {
+    border-collapse: collapse;
+
+    /* Workaround for repaint bug on google chrome */
+    -webkit-transform: translate3d(0,0,0)!important;
+
+    td, th {
+        padding:1px;
+    }
+
+    th {
+        border-bottom: 1px solid $secondary-color;
+    }
+
+    tr {
+        border-bottom: 1px solid darken($snow, 15%);
+        cursor: pointer;
+
+        &.odd, &.even {
+            background-color: $white;
+        }
+    }
+
+    tbody {
+        tr:hover {
+            background-color: $ghost;
+        }
+
+        td span {
+            font-weight: bold;
+            font-size:0.9em;
+        }
+    }
+}
+
+div.dataTables_info {
+    font-size: 0.6em!important;
+}
+
+// .dataTables_length {
+//     display: none;
+// }

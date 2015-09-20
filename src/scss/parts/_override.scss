@@ -1,0 +1,96 @@
+/**
+ * Misc
+ */
+body, html {
+    height: 100%;
+    overflow-y: visible;
+    -webkit-transform: translate3d(0,0,0)!important;
+    
+    &.blue {
+        $primary-color: #0F0;
+    }
+}
+
+h2, #issuePlaceholder > * {
+    /* Workaround for repaint bug on chrome */
+    -webkit-transform: translate3d(0,0,0)!important;
+}
+
+.top-bar .name h1 {
+    line-height: 42px;
+    a {
+        padding-left: 0;
+    }
+    img {
+        width: 40px;
+    }
+}
+
+.off-canvas-wrap, .inner-wrap {
+    //min-height: 800px;
+    height:100%;
+    overflow-y:visible;
+        
+    aside ul {
+        //padding-left: 10px;
+    }
+}
+
+.content {
+    overflow-y: auto;
+}
+
+body {
+    overflow:scroll;
+    background-color: $snow;
+
+    .content {
+        padding:15px;
+    }
+}
+
+.top-bar {
+    margin-bottom: 10px;
+}
+
+/**
+ * Modal
+ */
+.reveal-modal{
+    position : fixed;
+    /*
+    width:80%!important;
+    min-height: auto!important;
+    max-width: 50rem;
+    width: 80%;
+*/
+    .close-reveal-modal, .reveal-modal dialog {
+        top: rem-calc(0);
+        right: 0.3rem;
+        font-size: 1.5rem;
+    }
+}
+
+#directSearchPlaceholder .loader {
+    padding: 0;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #DDD;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: $primary-color;
+}
+
+
+.select2-container--default .select2-selection--single {
+    border-radius: 0;
+    padding: 3px;
+    border-color: #CCC;
+    height: 35px;
+}
+
+.select2-container--default .select2-results>.select2-results__options {
+    max-height: 400px;
+}
