@@ -1,3 +1,6 @@
+### 0.8.1
+- Window position is stored between sessions
+
 ### 0.8.0
 - Added select2.js to the project dropdown list
 
