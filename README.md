@@ -2,7 +2,9 @@
 
 Yet another [Redmine] time tracker.
 
-Allows users to choose a project, a task and monitor time by pressing play / pause.
+The app is available on the chrome app store : https://chrome.google.com/webstore/detail/chalk/nlokibpabmehjmnkbfhmipfcleemfbnd
+
+It allows users to choose a project, a task and monitor time by pressing play / pause.
 Idle time is detected, the time recorded during idle state is stored and the user is asked what to do with this recorded time (save or discard).
 To login, use the api key of your redmine account.
 
