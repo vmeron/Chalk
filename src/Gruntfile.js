@@ -25,7 +25,7 @@ module.exports = function (grunt) {
                 }
             }
         },
-        
+
         watch: {
             grunt: {
                 files: ['Gruntfile.js']
@@ -39,11 +39,11 @@ module.exports = function (grunt) {
                 tasks: ['babel', 'concat']
             },
             copy: {
-                files: ['locales/**', 'fonts/**', 'images/**', 'background.js', 'window.html'],
+                files: ['locales/**', 'fonts/**', 'images/**', 'background.js', 'window.html', 'main.js'],
                 tasks: ['copy']
             }
         },
-        
+
         babel: {
             options: {
                 sourceMap: true
@@ -71,7 +71,9 @@ module.exports = function (grunt) {
                     'locales/**',
                     'background.js',
                     'manifest.json',
-                    'window.html'
+                    'window.html',
+                    'package.json',
+                    'main.js'
                 ],
                 dest: '../build'
             },
@@ -80,7 +82,7 @@ module.exports = function (grunt) {
                 cwd: 'bower_components/font-awesome/fonts',
                 src: ['*'],
                 dest: '../build/fonts/font-awesome/',
-                
+
             }
         },
 

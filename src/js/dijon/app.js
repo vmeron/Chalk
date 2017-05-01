@@ -19,7 +19,7 @@ $(document).ready(function(){
             };
         };
     }( chalk ));
-    
+
     chalk.app = new chalk.App();
     chalk.app.startup();
 });
