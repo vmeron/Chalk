@@ -11,35 +11,37 @@
             timerService: undefined,
             appView: undefined,
             appModel: undefined,
-            
+
             idleTimerId: 'idleTimer',
 
             init: function(){
                 var self = this;
                 $(document).foundation();
-                
+
                 this.appView.init();
                 this.system.mapHandler('Auth:loginSuccess', 'appView', 'configHandler');
-                
+
                 this.timerService.loadTimer(this.idleTimerId);
-                
+
                 //Idle simulation
                 $('#idle').click(function(){
                     self.stateUpdateHandler('idle');
                 });
-                
+
                 $('#active').click(function(){
                     self.stateUpdateHandler('active');
                 });
-                
+
                 //Set idle management
+                /*
                 chrome.idle.onStateChanged.addListener(function(state){
                     self.stateUpdateHandler(state);
                 });
-                
+                */
+               
                 this.system.mapHandler('Timer:complete:'+this.idleTimerId, 'appController', 'timerCompleteHandler');
             },
-            
+
             stateUpdateHandler: function(state){
                 console.log('STATE CHANGE : '+state);
                 var timer = this.getTimer();
@@ -57,11 +59,11 @@
                     this.system.notify('App:status:'+state);
                 }
             },
-            
+
             timerCompleteHandler: function(){
                 this.system.notify('App:status:idle');
             },
-            
+
             getTimer: function(){
                 return this.timerService.getTimerById(this.idleTimerId);
             }

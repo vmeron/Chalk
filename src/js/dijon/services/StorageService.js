@@ -6,7 +6,12 @@
             system: undefined, //inject
 
             set: function (data, callback) {
-                localStorage.setItem(data);
+                console.log(data);
+                for(let i in data)
+                {
+                    localStorage.setItem(i, data[i]);
+                }
+
                 callback();
             },
 

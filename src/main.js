@@ -1,6 +1,9 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
+const idle = require('@paulcbetts/system-idle-time');
+
+console.log('Idletime :'+idle.getIdleTime());
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -13,7 +16,7 @@ function createWindow () {
       height: 600,
       webPreferences: {
         nodeIntegration: false
-      }
+    }
   })
 
   // and load the index.html of the app.
