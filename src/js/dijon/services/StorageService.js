@@ -7,7 +7,7 @@
 
             set: function (data, callback) {
                 console.log(data);
-                for(let i in data)
+                for(var i in data)
                 {
                     localStorage.setItem(i, data[i]);
                 }
