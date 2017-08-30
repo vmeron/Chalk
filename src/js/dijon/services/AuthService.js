@@ -9,7 +9,7 @@
 
             gateway: undefined,
             apiKey: undefined,
-            
+
             registerCredentials: function(gateway, apiKey){
                 var self = this;
                 gateway = gateway.toLowerCase();
@@ -30,15 +30,16 @@
                     gateway: gateway,
                     apiKey: apiKey
                 }, function(){
+                    console.log('HOHOHOH : '+self.gateway);
                     self.gateway = gateway;
                     self.apiKey = apiKey;
                     self.login();
                 });
             },
-            
+
             login: function () {
                 var self = this;
-                
+
                 this.storageService.get('apiKey', function(apiKey){
                     if(typeof apiKey.apiKey === 'undefined')
                     {
@@ -56,7 +57,7 @@
                     }
                 });
             },
-            
+
             logout: function () {
                 this.gateway = '';
                 this.apiKey = '';
