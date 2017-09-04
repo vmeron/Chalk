@@ -4,25 +4,65 @@
     ns.services.StorageService = function () {
         return {
             system: undefined, //inject
+            ipcService: undefined, //inject
+            processUtils: undefined, //inject
+            ipcHelper: undefined, //inject
 
-            set: function (data, callback) {
-                console.log(data);
-                console.log(localStorage);
-                for(var i in data)
-                {
-                    localStorage.setItem(i, data[i]);
-                }
-
-                callback();
+            setup: function() {
+                //this.clear();
+                //this.ipcHelper = require(this.processUtils.appDir+'/js/process/helpers/ipc.js');
             },
 
             get: function (varName, callback) {
-                var result = localStorage.getItem(varName);
-                callback({varName: result});
+                var resultString = localStorage.getItem(varName);
+                var result = JSON.parse(resultString);
+                console.log('RESULT GET ['+varName+'] : ');
+                console.log(result);
+
+                if(typeof callback !== 'undefined') {
+                    callback(result);
+                }
+                /*
+                var self = this;
+                var result = this.ipcService.send('storageServiceGet', {
+                    varName: varName
+                }, function(event, response) {
+                    if(typeof callback !== 'undefined') {
+                        console.log('Storage get result : '+varName);
+                        console.log(response);
+
+                        callback(response.data);
+                    }
+                });
+                */
+
+            },
+
+            set: function (varName, data, callback) {
+                localStorage.setItem(varName, JSON.stringify(data));
+                console.log('RESULT SET ['+varName+'] : ');
+                console.log(JSON.stringify(data));
+
+                if(typeof callback !== 'undefined') {
+                    callback(data);
+                }
+
+                /*
+                var self = this;
+
+                var result = this.ipcService.send('storageServiceSet', {
+                    varName: varName,
+                    data: data
+                }, function(event, response) {
+                    if(typeof callback !== 'undefined') {
+                        callback(response.data);
+                    }
+                });*/
             },
 
             clear: function(){
                 localStorage.clear();
+                //this.ipcService.send('storageServiceClear');
             }
         };
     };

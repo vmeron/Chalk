@@ -9,13 +9,13 @@ module.exports = function (grunt) {
                     'bower_components/datatables/media/css',
                     'bower_components/font-awesome/scss',
                     'bower_components/AmaranJS/dist/css',
-                    'bower_components/select2/',
+                    'bower_components',
                 ],
                 imagePath: '/foundation'
             },
             build: {
                 options: {
-                    outputStyle: 'compressed',
+                    /*outputStyle: 'compressed',*/
                     imagePath: '/images'
                 },
                 files: {
@@ -35,12 +35,12 @@ module.exports = function (grunt) {
                 tasks: ['sass:build']
             },
             js: {
-                files: ['js/*/**/*.js'],
-                tasks: ['babel', 'concat']
+                files: ['js/*/**/*.js', 'main.js'],
+                tasks: ['babel', 'concat', 'copy:process']
             },
             copy: {
                 files: ['locales/**', 'fonts/**', 'images/**', 'background.js', 'window.html', 'main.js'],
-                tasks: ['copy']
+                tasks: ['copy', 'symlink']
             }
         },
 
@@ -83,11 +83,18 @@ module.exports = function (grunt) {
                 src: ['*'],
                 dest: '../build/fonts/font-awesome/'
             },
+            /*
             node_modules: {
                 expand: true,
                 cwd: 'node_modules',
                 src: ['**'],
                 dest: '../build/node_modules/'
+            },*/
+            process: {
+                expand: true,
+                cwd: 'js/process',
+                src: ['**'],
+                dest: '../build/js/process'
             }
         },
 
@@ -206,6 +213,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-symlink');
 
-    grunt.registerTask('default', ['clean', 'sass:build', 'jshint', 'copy:babel', 'babel', 'concat', 'copy:build', 'copy:awesome', 'symlink', 'watch']);
+    grunt.registerTask('default', ['clean', 'sass:build', 'jshint', 'copy:babel', 'babel', 'concat', 'copy:build', 'copy:awesome', 'copy:process', 'symlink', 'watch']);
     grunt.registerTask('release', ['clean', 'sass:build', 'jshint', 'copy:babel', 'babel', 'concat', 'uglify', 'copy:build', 'copy:awesome', 'symlink', 'compress:release', 'clean']);
 };

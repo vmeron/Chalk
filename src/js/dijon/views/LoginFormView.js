@@ -13,9 +13,6 @@
 
             setup: function () {
                 var self = this;
-                //Setting form default values
-                //$loginForm.find('#apiGateway').val(this.gateway);
-                //$loginForm.find('#apiKey').val(this.apiKey);
 
                 $loginForm.submit(function(ev){
                     ev.preventDefault();
@@ -33,7 +30,8 @@
                 $loginForm.foundation('reveal', 'open', {
                     close_on_esc: false
                 });
-                $loginForm.find('#apiGateway').val('');
+
+                $loginForm .find('#apiGateway').val('');
                 $loginForm.find('#apiKey').val('');
             },
 

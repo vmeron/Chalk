@@ -9,7 +9,7 @@
             system:undefined,
             configUtils: undefined,
             templateService: undefined,
-            
+
             add: function(data){
                 var content = this.templateService.parse(data.templateHtml, data.templateData);
                 var configId = this.configUtils.getDomId(data.id);
@@ -18,17 +18,20 @@
                     label: data.label,
                     content: content
                 });
-                
+
                 $configPlaceholder.append(html);
-                
+
                 if(typeof data.callback !== 'undefined')
                 {
+                    console.log('Before configutils read');
+
                     this.configUtils.read(data.id, function(result){
+                        console.log('Reading from configutils');
                         data.callback(configId, result);
                     });
                 }
             },
-            
+
             reset:function(){
                 $configPlaceholder.html('');
             }

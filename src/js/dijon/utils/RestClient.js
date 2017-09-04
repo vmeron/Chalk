@@ -3,10 +3,10 @@
 
     ns.utils.RestClient = function(){
         return {
-            system: undefined,
-            apiKey: undefined,
-            gateway: undefined,
-            authService: undefined,
+            system: undefined, //inject
+            apiKey: undefined, //inject
+            gateway: undefined, //inject
+            authService: undefined, //inject
 
             methods: {
                 GET: 'GET',
@@ -16,7 +16,7 @@
             },
             gatewaySuffix: '/',
             dataType: 'json',
-            
+
             call: function (method, service, params, callback, callbackError)
             {
                 var gateway = this.authService.gateway;
@@ -24,7 +24,7 @@
 
                 var url = gateway+this.gatewaySuffix+service+'.'+this.dataType;
                 var self = this;
-                
+
                 try {
                     this.system.notify('Rest:start');
                     //@TODO: Add caching
@@ -33,12 +33,12 @@
                         url:url,
                         data: params,
                         dataType: this.dataType,
-                        
+
                         success: function(result){
                             self.system.notify('Rest:success');
                             callback(result);
                         },
-                        
+
                         error: function(err){
                             //self.system.notify('App:alert:error', 'Connexion impossible');
                             self.system.notify('Rest:error');
@@ -47,12 +47,13 @@
                                 callbackError(err);
                             }
                         },
-                        
+
                         beforeSend: function(xhr){
                             xhr.setRequestHeader ("X-Redmine-API-Key", apiKey);
                         }
                     });
-                }catch(err)
+                }
+                catch(err)
                 {
                     this.system.notify('App:alert:error', 'Connexion impossible');
                     console.log(err);

@@ -168,7 +168,8 @@
         <script id="divTemplate" type="html/template">
             <div id="{{id}}">{{content}}</div>
         </script>
-
+        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
         <script type="text/javascript" src="js/chalk.js"></script>
+        <script>if (window.module) module = window.module;</script>
     </body>
 </html>

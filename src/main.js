@@ -1,27 +1,73 @@
-const {app, BrowserWindow} = require('electron')
-const path = require('path')
-const url = require('url')
-const idle = require('@paulcbetts/system-idle-time');
 const os = require('os');
-const localStorage = require('electron-json-storage');
+const {app, BrowserWindow, ipcMain} = require('electron');
+const electron = require('electron');
+const path = require('path');
+const url = require('url');
+const idle = require('@paulcbetts/system-idle-time');
+const storage = require('electron-json-storage');
+const storageListeners = require('./js/process/listeners/storage.js').ipcListeners;
+const _ = require('lodash');
+const windowHelper = require('./js/process/helpers/window.js');
 
-localStorage.setDataPath(os.tmpdir());
+//console.log('Idletime :'+idle.getIdleTime());
+storage.setDataPath(os.tmpdir());
 
-console.log('Idletime :'+idle.getIdleTime());
-
+/*
+storage.clear(function(error) {
+    if(error) {
+        throw error;
+    }
+});
+*/
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
+
 function createWindow () {
+    var area = electron.screen.getPrimaryDisplay().workArea;
+
+    for(var i in storageListeners) {
+        ipcMain.on(i, storageListeners[i]);
+    }
+
+    storage.get('windowOptions', function(event, windowOptions) {    
+        if(_.isEmpty(windowOptions)) {
+            windowOptions = windowHelper.getDefaultWindowState(area);
+
+            storage.set('windowOptions', windowOptions, function(error) {
+                if(error) {
+                    throw error;
+                }
+            });
+        }
+
+        win.setPosition(windowOptions.x, windowOptions.y, false);
+        win.setSize(windowOptions.width, windowOptions.height, false);
+
+        win.show();
+
+        win.on('resize', function() {
+            var newOptions = windowHelper.getCurrentWindowState(win);
+            storage.set('windowOptions', newOptions);
+        });
+
+        win.on('move', function() {
+            var newOptions = windowHelper.getCurrentWindowState(win);
+            storage.set('windowOptions', newOptions);
+        });
+    });
+
     // Create the browser window.
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        //width: 800,
+        //height: 600,
+        show: false,
         webPreferences: {
-            nodeIntegration: false
+            //nodeIntegration: false
         }
     });
+
     // and load the index.html of the app.
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'window.html'),
@@ -31,7 +77,6 @@ function createWindow () {
 
     // Open the DevTools.
     win.webContents.openDevTools();
-    win.localStorage = localStorage;
 
     // Emitted when the window is closed.
     win.on('closed', () => {
@@ -40,12 +85,16 @@ function createWindow () {
         // when you should delete the corresponding element.
         win = null;
     });
+
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', function() {
+    console.log('On ready');
+    createWindow();
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -60,6 +109,7 @@ app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (win === null) {
+        console.log('On activate');
         createWindow();
     }
 });

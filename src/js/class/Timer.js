@@ -29,7 +29,7 @@ class Timer {
             }
 
             _this.durationLeft -= _this.momentum;
-        }
+        };
 
         if(!this.timerID)
         {
@@ -42,7 +42,7 @@ class Timer {
         this.durationLeft = 0;
         clearInterval(this.timerID);
         this.timerID = null;
-        $(this).trigger(this.TIMER_COMPLETE)
+        $(this).trigger(this.TIMER_COMPLETE);
     }
 
     cancel()

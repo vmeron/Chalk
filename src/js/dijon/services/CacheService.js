@@ -4,9 +4,10 @@
     ns.services.CacheService = function () {
         return {
             system: undefined, //inject
-            storageService: undefined,
+            storageService: undefined, //inject
+            _: undefined, //inject
             time: undefined,
-            
+
             prefix: 'CACHE_',
 
             DAY: 3600*24,
@@ -14,11 +15,9 @@
 
             get: function(cid, callback){
                 var self = this;
+                
                 this.storageService.get(this.getCid(cid), function(result){
-                    var cid = [Object.keys(result)[0]];
-                    result = result[cid];
-                    
-                    if(null === result && callback)
+                    if(self._.isEmpty(result) && callback)
                     {
                         callback(null);
                     }
@@ -35,10 +34,7 @@
                                 result = result.data;
                             }
 
-                            if(callback)
-                            {
-                                callback(result);
-                            }
+                            callback(result);
                         }
                     }
                 });
@@ -50,18 +46,19 @@
                 {
                     return false;
                 }
-                
+
                 return data.ttl > time;
             },
 
             set: function(cid, data, duration){
                 var cacheData = {};
-                cacheData[this.getCid(cid)] = {
+                var cleanCid = this.getCid(cid);
+                cacheData = {
                     ttl: this.time.getUnixTime(duration),
                     data: data
                 };
-                
-                this.storageService.set(cacheData);
+
+                this.storageService.set(cleanCid, cacheData);
             },
 
             getCid: function(cid){

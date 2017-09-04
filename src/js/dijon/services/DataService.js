@@ -4,8 +4,8 @@
     ns.services.DataService = function () {
         return {
             system: undefined, //inject
-            cacheService: undefined,
-            restClient: undefined,
+            cacheService: undefined, //inject
+            restClient: undefined, //inject
 
             buffer: {},
             currentStart: {},
