@@ -3,13 +3,11 @@ const {app, BrowserWindow, ipcMain} = require('electron');
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
-const idle = require('@paulcbetts/system-idle-time');
 const storage = require('electron-json-storage');
 const storageListeners = require('./js/process/listeners/storage.js').ipcListeners;
 const _ = require('lodash');
 const windowHelper = require('./js/process/helpers/window.js');
 
-//console.log('Idletime :'+idle.getIdleTime());
 storage.setDataPath(os.tmpdir());
 
 /*
@@ -31,7 +29,7 @@ function createWindow () {
         ipcMain.on(i, storageListeners[i]);
     }
 
-    storage.get('windowOptions', function(event, windowOptions) {    
+    storage.get('windowOptions', function(event, windowOptions) {
         if(_.isEmpty(windowOptions)) {
             windowOptions = windowHelper.getDefaultWindowState(area);
 

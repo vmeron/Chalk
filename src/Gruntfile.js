@@ -36,7 +36,7 @@ module.exports = function (grunt) {
             },
             js: {
                 files: ['js/*/**/*.js', 'main.js'],
-                tasks: ['babel', 'concat', 'copy:process']
+                tasks: ['copy:babel', 'babel', 'concat', 'copy:process']
             },
             copy: {
                 files: ['locales/**', 'fonts/**', 'images/**', 'background.js', 'window.html', 'main.js'],

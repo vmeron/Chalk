@@ -23,10 +23,7 @@
 
                 if(typeof data.callback !== 'undefined')
                 {
-                    console.log('Before configutils read');
-
                     this.configUtils.read(data.id, function(result){
-                        console.log('Reading from configutils');
                         data.callback(configId, result);
                     });
                 }

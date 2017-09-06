@@ -23,8 +23,7 @@
             read: function(id, callback){
                 var self = this;
                 id = this.ID_PREFIX+id;
-
-                console.log('Reading from configutils');
+    
                 this.storageService.get(id, function(result){
                     if(self._.isEmpty(result)) {
                         result = undefined;

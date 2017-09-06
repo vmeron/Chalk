@@ -11,17 +11,17 @@
             notificationService: undefined,
             errorService: undefined,
             configUtils: undefined,
-            
+
             time: undefined,
             interval: 1000,
             intervalRef: undefined,
             currentActivity: undefined,
             timeDestination: 'saveBuffer',
-            
+
             saveBuffer: 0,
             idleBuffer: 0,
             currentTime: 0,
-            
+
             type: undefined,
             data: undefined,
 
@@ -31,27 +31,27 @@
 
             STATUS_PLAY: 1,
             STATUS_PAUSE: 0,
-            
+
             APP_STATUS_ACTIVE: 'active',
             APP_STATUS_IDLE: 'idle',
 
             MIN_TIME: 60,
-            
+
             start: function(data, type){
                 var self = this;
-                
+
                 if(this.status == this.STATUS_PLAY)
                 {
                     this.errorService.throw("chrono.error.alreadyCounting");
                 }
-                
+
                 this.reset();
                 this.validateData(data, type);
                 this.appStatus = this.APP_STATUS_ACTIVE;
-                
+
                 this.data = data;
                 this.type = type;
-                
+
                 this.system.notify('Chrono:loaded');
             },
 
@@ -65,7 +65,7 @@
                     this.system.notify('App:alert:error', 'chrono.choose');
                     this.errorService.throw("chrono.error.choose");
                 }
-                
+
                 this.currentActivity = activity;
 
                 if(!this.intervalRef && activity.id > 0)
@@ -78,7 +78,6 @@
             },
 
             pause: function(postTime){
-                console.log('MODEL ON PAUSE');
                 if(typeof postTime === 'undefined')
                 {
                     postTime = true;
@@ -87,7 +86,7 @@
                 clearInterval(this.intervalRef);
                 this.intervalRef = null;
                 this.status = this.STATUS_PAUSE;
-                
+
                 //Save in background
                 if(postTime)
                 {
@@ -97,17 +96,17 @@
 
             idle: function(){
                 var self = this;
-                
+
                 if(this.status == this.STATUS_PLAY)
                 {
                     this.appModel.getIdleTime(function(result){
                         //Remove idle time from buffer and inject it into idle buffer
                         self.saveBuffer = self.saveBuffer - result * 60;
-                        
+
                         self.postTime('saveBuffer');
                         self.timeDestination = 'idleBuffer';
                         self.appStatus = self.APP_STATUS_IDLE;
-                        
+
                         self.idleBuffer = self.idleBuffer + result * 60;
                     });
                 }
@@ -118,7 +117,8 @@
                 if(this.status == this.STATUS_PLAY && this.timeDestination === 'idleBuffer')
                 {
                     this.system.notify('Chrono:pause', false);
-                    chrome.app.window.current().show();
+                    //TODO :Use IPC to put electron window on the foreground
+                    //chrome.app.window.current().show();
                     this.timeDestination = 'saveBuffer';
                     this.appStatus = this.APP_STATUS_ACTIVE;
                 }
@@ -160,7 +160,7 @@
                 {
                     this.errorService.throw("chrono.error.invalidId");
                 }
-                
+
                 if(type != this.rmIssueModel.TYPE && type.rmProjectModel.TYPE)
                 {
                     this.errorService.throw("chrono.error.forbiddenType");
@@ -187,7 +187,7 @@
                 {
                     destination = 'saveBuffer';
                 }
-                
+
                 var self = this;
                 this.validateActivity(this.currentActivity);
                 this.system.notify('Chrono:save');
@@ -220,7 +220,7 @@
                     });
                 }
             },
-            
+
             emptyBuffer: function(id){
                 this[id] = 0;
             }

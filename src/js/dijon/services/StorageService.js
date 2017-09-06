@@ -16,8 +16,6 @@
             get: function (varName, callback) {
                 var resultString = localStorage.getItem(varName);
                 var result = JSON.parse(resultString);
-                console.log('RESULT GET ['+varName+'] : ');
-                console.log(result);
 
                 if(typeof callback !== 'undefined') {
                     callback(result);
@@ -40,8 +38,6 @@
 
             set: function (varName, data, callback) {
                 localStorage.setItem(varName, JSON.stringify(data));
-                console.log('RESULT SET ['+varName+'] : ');
-                console.log(JSON.stringify(data));
 
                 if(typeof callback !== 'undefined') {
                     callback(data);

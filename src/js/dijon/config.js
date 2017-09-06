@@ -31,6 +31,7 @@ var chalk = {};
                 this.system.mapSingleton('translateController', ns.controllers.TranslateController);
                 this.system.mapSingleton('languageController', ns.controllers.LanguageController);
                 this.system.mapSingleton('userController', ns.controllers.UserController);
+                this.system.mapSingleton('idleController', ns.controllers.IdleController);
 
                 //Services
                 this.system.mapSingleton('loaderService', ns.services.LoaderService);
@@ -45,6 +46,8 @@ var chalk = {};
                 this.system.mapSingleton('timerService', ns.services.TimerService);
                 this.system.mapSingleton('ipcService', ns.services.IpcService);
                 this.system.mapSingleton('_', ns.services.LodashService);
+                this.system.mapSingleton('openService', ns.services.OpenService);
+                this.system.mapSingleton('idleService', ns.services.IdleService);
 
                 //Models
                 this.system.mapSingleton('rmProjectModel', ns.models.RmProjectModel);
@@ -99,6 +102,7 @@ var chalk = {};
                 this.system.mapHandler('Translate:ready', 'themeController', 'init');
                 this.system.mapHandler('Translate:ready', 'userController', 'init');
                 this.system.mapHandler('Translate:ready', 'appController', 'init');
+                this.system.mapHandler('Translate:ready', 'idleController', 'init');
 
                 this.system.mapHandler('Auth:loginRequired', 'loginFormView', 'showLoginForm');
                 this.system.mapHandler('Auth:loginSuccess', 'loginFormView', 'hideLoginForm');

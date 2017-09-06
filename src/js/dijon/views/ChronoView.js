@@ -19,6 +19,7 @@
             configUtils: undefined,
             templateService: undefined,
             authService: undefined,
+            openService: undefined,
 
             status: undefined,
 
@@ -57,6 +58,11 @@
                     ev.preventDefault();
                     self.hideMessage();
                     self.chronoModel.emptyBuffer('idleBuffer');
+                });
+
+                $chrono.on('click', '.title a', function(event) {
+                    event.preventDefault();
+                    self.openService.open($(this).attr('href'));
                 });
 
                 $(document).on('closed.fndtn.reveal', '#chrono', function(){

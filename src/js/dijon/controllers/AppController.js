@@ -2,6 +2,8 @@
     'use strict';
 
     ns.controllers.AppController = function () {
+
+
         return {
             system: undefined,
             rmIssueModel: undefined,
@@ -21,9 +23,10 @@
                 this.appView.init();
                 this.system.mapHandler('Auth:loginSuccess', 'appView', 'configHandler');
 
-                this.timerService.loadTimer(this.idleTimerId);
+                //this.timerService.loadTimer(this.idleTimerId);
 
                 //Idle simulation
+                /*
                 $('#idle').click(function(){
                     self.stateUpdateHandler('idle');
                 });
@@ -31,6 +34,7 @@
                 $('#active').click(function(){
                     self.stateUpdateHandler('active');
                 });
+                */
 
                 //Set idle management
                 /*
@@ -38,9 +42,18 @@
                     self.stateUpdateHandler(state);
                 });
                 */
-               
-                this.system.mapHandler('Timer:complete:'+this.idleTimerId, 'appController', 'timerCompleteHandler');
+
+                this.system.mapHandler('Idle:stateChange:idle', 'appController', 'idleHandler');
+                this.system.mapHandler('Idle:stateChange:active', 'appController', 'activeHandler');
+
+                //this.system.mapHandler('Timer:complete:'+this.idleTimerId, 'appController', 'timerCompleteHandler');
             },
+
+            secondHandler: function() {
+                console.log('TICKING : '+systemIdleTime.getIdleTime());
+
+            },
+            /*
 
             stateUpdateHandler: function(state){
                 console.log('STATE CHANGE : '+state);
@@ -59,7 +72,7 @@
                     this.system.notify('App:status:'+state);
                 }
             },
-
+            */
             timerCompleteHandler: function(){
                 this.system.notify('App:status:idle');
             },
