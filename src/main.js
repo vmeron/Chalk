@@ -1,3 +1,5 @@
+var win = 'hoho';
+
 const os = require('os');
 const {app, BrowserWindow, ipcMain} = require('electron');
 const electron = require('electron');
@@ -8,6 +10,8 @@ const storageListeners = require('./js/process/listeners/storage.js').ipcListene
 const _ = require('lodash');
 const windowHelper = require('./js/process/helpers/window.js');
 
+
+console.log('Data path : ', storage.getDataPath());
 storage.setDataPath(os.tmpdir());
 
 /*
@@ -19,7 +23,7 @@ storage.clear(function(error) {
 */
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win;
+
 
 
 function createWindow () {
@@ -74,7 +78,7 @@ function createWindow () {
     }));
 
     // Open the DevTools.
-    win.webContents.openDevTools();
+    ///win.webContents.openDevTools();
 
     // Emitted when the window is closed.
     win.on('closed', () => {
