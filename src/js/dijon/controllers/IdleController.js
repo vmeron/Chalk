@@ -39,6 +39,7 @@
 
                 this.appModel.getIdleTime(function(maxDurationMilli) {
                     self.maxDuration = maxDurationMilli * 1000 * 60;
+                    self.maxDuration = 5000;
                     var maxDuration = self.maxDuration;
                     var idleTime = self.idleService.getIdleTime();
 
@@ -48,10 +49,12 @@
 
                     if(self.state === self.STATE_ACTIVE && idleTime > maxDuration) {
                         self.state = self.STATE_IDLE;
+                        console.log('NOTIFY IDLE');
                         self.system.notify('App:status:idle');
                     }
                     else if(self.state === self.STATE_IDLE && idleTime < maxDuration) {
                         self.state = self.STATE_ACTIVE;
+                        console.log('NOTIFY ACTIVE');
                         self.system.notify('App:status:active');
                     }
                 });

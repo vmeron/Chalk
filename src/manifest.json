@@ -1,7 +1,7 @@
 {
     "name": "Chalk",
     "description": "Redmine time tracker.",
-    "version": "0.8.1",
+    "version": "0.9.0-beta.1",
     "author": "Vincent Meron",
     "manifest_version": 2,
     "app": {

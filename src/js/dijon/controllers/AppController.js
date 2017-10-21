@@ -11,6 +11,7 @@
             latestIssuesModel: undefined,
             notificationService: undefined,
             timerService: undefined,
+            ipcService: undefined,
             appView: undefined,
             appModel: undefined,
 
@@ -43,10 +44,14 @@
                 });
                 */
 
-                this.system.mapHandler('Idle:stateChange:idle', 'appController', 'idleHandler');
-                this.system.mapHandler('Idle:stateChange:active', 'appController', 'activeHandler');
+                //this.system.mapHandler('App:status:idle', 'appController', 'idleHandler');
+                this.system.mapHandler('App:status:active', 'appController', 'activeHandler');
 
                 //this.system.mapHandler('Timer:complete:'+this.idleTimerId, 'appController', 'timerCompleteHandler');
+            },
+
+            activeHandler: function() {
+                this.ipcService.send('App:status:active');
             },
 
             secondHandler: function() {

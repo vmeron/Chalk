@@ -44,7 +44,7 @@
                 var self = this;
 
                 this.storageService.get('latestIssues', function(result){
-                    if(typeof result === 'undefined' || !result.hasOwnProperty('latestIssues'))
+                    if(typeof result === 'undefined' || result === null || !result.hasOwnProperty('latestIssues'))
                     {
                         result = [];
                     }
