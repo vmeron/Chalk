@@ -1,0 +1,26 @@
+{
+    "name": "Chalk",
+    "description": "Redmine time tracker.",
+    "version": "0.9.0-beta.1",
+    "author": "Vincent Meron",
+    "manifest_version": 2,
+    "app": {
+        "background": {
+            "scripts": ["background.js"]
+        }
+    },
+    "icons": {
+        "16": "icons/16x16.png",
+        "32": "icons/32x32.png",
+        "48": "icons/48x48.png",
+        "128": "icons/128x128.png",
+        "256": "icons/256x256.png",
+        "512": "icons/512x512.png"
+    },
+    "permissions": [
+        "https://*/",
+        "http://*/",
+        "storage",
+        "idle"
+    ]
+}

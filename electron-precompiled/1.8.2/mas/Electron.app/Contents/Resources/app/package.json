@@ -1,0 +1,27 @@
+{
+  "name": "Chalk",
+  "version": "0.9.0-beta.1",
+  "main": "main.js",
+  "dependencies": {
+    "@paulcbetts/system-idle-time": "github:paulcbetts/node-system-idle-time",
+    "babel-core": "^6.26.0",
+    "electron": "^1.8.1",
+    "electron-json-storage": "^4.0.2",
+    "electron-rebuild": "^1.6.0",
+    "grunt": "^1.0.1",
+    "grunt-babel": "^7.0.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-compress": "^1.4.3",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-symlink": "^1.0.0",
+    "grunt-contrib-uglify": "^3.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-sass": "^2.0.0",
+    "lodash": "^4.17.4",
+    "node-sass": "^4.5.3",
+    "system-idle-time": "^0.1.4"
+  }
+}
