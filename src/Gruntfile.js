@@ -46,11 +46,12 @@ module.exports = function (grunt) {
 
         babel: {
             options: {
-                sourceMap: true
+                sourceMap: false,
+                presets: ['env']
             },
             build: {
                 files: {
-                    '../babel/class/Timer.js': '../babel/class/Timer.js'
+                    'js/class/Timer-compiled.js': 'js/class/Timer.js'
                 }
             }
         },
@@ -59,8 +60,8 @@ module.exports = function (grunt) {
             babel: {
                 expand: true,
                 cwd: 'js',
-                src: ['class/*.js'],
-                dest: '../babel/'
+                src: ['class/*-compiled.js'],
+                dest: '../build'
             },
             build: {
                 expand: true,
@@ -116,7 +117,7 @@ module.exports = function (grunt) {
                 force: true,
             },
             build: {
-                src: ['../build/**', '../babel/**']
+                src: ['../build/**', '../babel/**', 'js/class/*-compiled.js']
             }
         },
 
@@ -199,6 +200,14 @@ module.exports = function (grunt) {
                     }
                 ]
             }
+        },
+        asar: {
+            release: {
+                cwd: '../',
+                src: ['build'],
+                dest: 'make/app.asar'
+
+            }
         }
     });
 
@@ -212,7 +221,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-symlink');
+    grunt.loadNpmTasks('grunt-asar');
 
     grunt.registerTask('default', ['clean', 'sass:build', 'jshint', 'copy:babel', 'babel', 'concat', 'copy:build', 'copy:awesome', 'copy:process', 'symlink', 'watch']);
-    grunt.registerTask('release', ['clean', 'sass:build', 'jshint', 'copy:babel', 'babel', 'concat', 'uglify', 'copy:build', 'copy:awesome', 'symlink', 'compress:release', 'clean']);
+    grunt.registerTask('release', ['clean', 'sass:build', 'jshint', 'babel', 'copy:babel', 'concat', 'uglify', 'copy:build', 'copy:awesome', 'symlink', 'asar:release', 'clean']);
 };
