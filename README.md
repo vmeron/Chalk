@@ -37,6 +37,13 @@ You might need to make an `npm rebuild --from-source` inside the src folder to f
 
 `grunt clean` : Removes the  build/ and babel/ folders
 
+## Package
+
+Use electron-packager from the root folder with the following command : 
+```bash
+electron-packager build --icon=src/icons/512x512.icns --overwrite --platform=darwin --arch=x64  --prune=true --out=release-builds
+```
+
 ## Contributing
 
 Feel free to contribute if you have improvements in mind. However, I do not want this project to become an desktop version of redmine.

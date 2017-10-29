@@ -40,7 +40,7 @@ module.exports = function (grunt) {
             },
             copy: {
                 files: ['locales/**', 'fonts/**', 'images/**', 'background.js', 'window.html', 'main.js'],
-                tasks: ['copy', 'symlink']
+                tasks: ['copy:build', 'copy:awesome', 'copy:process', 'symlink']
             }
         },
 
@@ -51,7 +51,7 @@ module.exports = function (grunt) {
             },
             build: {
                 files: {
-                    'js/class/Timer-compiled.js': 'js/class/Timer.js'
+                    '../build/js/class/Timer.js': 'js/class/Timer.js'
                 }
             }
         },
@@ -68,7 +68,7 @@ module.exports = function (grunt) {
                 src: [
                     'fonts/**',
                     'images/**',
-                    'icons/**',
+                    'icons/*',
                     'locales/**',
                     'background.js',
                     'manifest.json',
@@ -76,6 +76,13 @@ module.exports = function (grunt) {
                     'package.json',
                     'main.js'
                 ],
+                dest: '../build',
+                ignore: ['app']
+            },
+            icons: {
+                cwd: 'icons/app',
+                expand: true,
+                src: ['*'],
                 dest: '../build'
             },
             awesome: {
@@ -96,6 +103,12 @@ module.exports = function (grunt) {
                 cwd: 'js/process',
                 src: ['**'],
                 dest: '../build/js/process'
+            },
+
+            node_modules: {
+                expand: true,
+                src: ['node_modules/**'],
+                dest: '../build'
             }
         },
 
@@ -208,7 +221,28 @@ module.exports = function (grunt) {
                 dest: 'make/app.asar'
 
             }
-        }
+        },
+        /*
+        'electron-packager': {
+            mac: {
+                options: function(platform, arch) {
+                    var data = {
+                        electronVersion: '1.8.2-beta.1',
+                        name: 'Chalk',
+                        dir: '../build',
+                        icon: './icons/512x512.icns',
+                        platform: platform,
+                        arch: arch,
+                        out: '../release',
+                        asar: true,
+                        overwrite: true,
+                        prune: true
+                    };
+                    console.log('DATA', data);
+                    return data;
+                }
+            }
+        }*/
     });
 
     grunt.loadNpmTasks('grunt-sass');
@@ -222,7 +256,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-symlink');
     grunt.loadNpmTasks('grunt-asar');
+    //grunt.loadNpmTasks('grunt-electron-packager');
+    //grunt.loadNpmTasks('grunt-electron-builder');
 
-    grunt.registerTask('default', ['clean', 'sass:build', 'jshint', 'copy:babel', 'babel', 'concat', 'copy:build', 'copy:awesome', 'copy:process', 'symlink', 'watch']);
-    grunt.registerTask('release', ['clean', 'sass:build', 'jshint', 'babel', 'copy:babel', 'concat', 'uglify', 'copy:build', 'copy:awesome', 'symlink', 'asar:release', 'clean']);
+    grunt.registerTask('default', ['clean', 'sass:build', 'jshint', 'babel', 'copy:babel', 'concat', 'copy:build', 'copy:awesome', 'copy:process', 'symlink', 'watch']);
+    grunt.registerTask('release', ['clean', 'sass:build', 'jshint', 'babel', 'copy:babel', 'concat', 'uglify', 'copy:build', 'copy:awesome', 'copy:icons', 'copy:process', 'copy:node_modules']); //, 'electron-packager:mac:darwin:x64', 'clean']);
 };

@@ -1,7 +1,7 @@
 var win = 'hoho';
 
 const os = require('os');
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, Menu} = require('electron');
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
@@ -9,10 +9,15 @@ const storage = require('electron-json-storage');
 const storageListeners = require('./js/process/listeners/storage.js').ipcListeners;
 const _ = require('lodash');
 const windowHelper = require('./js/process/helpers/window.js');
+const autoUpdater = require("electron-updater").autoUpdater
 
+//Debug mode
+const ENV_DEBUG = process.argv.indexOf('--dev') > -1;
 
-console.log('Data path : ', storage.getDataPath());
-storage.setDataPath(os.tmpdir());
+autoUpdater.checkForUpdatesAndNotify();
+
+//console.log('Data path : ', storage.getDataPath());
+//storage.setDataPath(os.tmpdir());
 
 /*
 storage.clear(function(error) {
@@ -32,6 +37,10 @@ function createWindow () {
     for(var i in storageListeners) {
         ipcMain.on(i, storageListeners[i]);
     }
+
+    ipcMain.on('App:status:active', function() {
+        win.focus();
+    });
 
     storage.get('windowOptions', function(event, windowOptions) {
         if(_.isEmpty(windowOptions)) {
@@ -58,6 +67,27 @@ function createWindow () {
             var newOptions = windowHelper.getCurrentWindowState(win);
             storage.set('windowOptions', newOptions);
         });
+
+        var template = [{
+            label: "Chalk",
+            submenu: [
+                { label: "About Application", selector: "orderFrontStandardAboutPanel:" },
+                { type: "separator" },
+                { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
+            ]}, {
+            label: "Edit",
+            submenu: [
+                { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+                { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+                { type: "separator" },
+                { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+                { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+                { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+                { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+            ]}
+        ];
+
+        Menu.setApplicationMenu(Menu.buildFromTemplate(template));
     });
 
     // Create the browser window.
@@ -78,14 +108,17 @@ function createWindow () {
     }));
 
     // Open the DevTools.
-    win.webContents.openDevTools();
+    if(ENV_DEBUG) {
+        win.webContents.openDevTools();
+    }
 
     // Emitted when the window is closed.
     win.on('closed', () => {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
-        win = null;
+        //win = null;
+        app.quit();
     });
 
 }

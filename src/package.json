@@ -1,30 +1,56 @@
 {
-  "name": "Chalk",
-  "version": "0.9.0-beta.1",
-  "main": "main.js",
-  "dependencies": {
-    "@paulcbetts/system-idle-time": "github:paulcbetts/node-system-idle-time",
-    "asar": "^0.13.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.26.0",
-    "electron": "^1.8.1",
-    "electron-json-storage": "^4.0.2",
-    "electron-rebuild": "^1.6.0",
-    "grunt": "^1.0.1",
-    "grunt-asar": "git+https://github.com/bwin/grunt-asar.git#update-asar",
-    "grunt-babel": "^7.0.0",
-    "grunt-contrib-clean": "^1.1.0",
-    "grunt-contrib-compress": "^1.4.3",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-symlink": "^1.0.0",
-    "grunt-contrib-uglify": "^3.1.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-sass": "^2.0.0",
-    "lodash": "^4.17.4",
-    "node-sass": "^4.5.3",
-    "system-idle-time": "^0.1.4"
-  }
+    "name": "Chalk",
+    "productName": "Chalk",
+    "description": "Time tracker for Readmine.",
+    "version": "0.9.0-beta.1",
+    "main": "main.js",
+    "dependencies": {
+        "@paulcbetts/system-idle-time": "github:paulcbetts/node-system-idle-time",
+        "asar": "^0.13.0",
+        "babel-preset-env": "^1.6.1",
+        "babel-register": "^6.26.0",
+        "lodash": "^4.17.4",
+        "node-sass": "^4.5.3",
+        "open": "0.0.5",
+        "system-idle-time": "^0.1.4"
+    },
+    "devDependencies": {
+        "electron": "^1.8.1",
+        "electron-builder": "^19.42.2",
+        "electron-json-storage": "^4.0.2",
+        "electron-packager": "^9.1.0",
+        "electron-rebuild": "^1.6.0",
+        "electron-updater": "^2.15.0",
+        "grunt": "^1.0.1",
+        "grunt-asar": "git+https://github.com/bwin/grunt-asar.git#update-asar",
+        "grunt-babel": "^7.0.0",
+        "grunt-contrib-clean": "^1.1.0",
+        "grunt-contrib-compress": "^1.4.3",
+        "grunt-contrib-concat": "^1.0.1",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-contrib-jshint": "^1.1.0",
+        "grunt-contrib-sass": "^1.0.0",
+        "grunt-contrib-symlink": "^1.0.0",
+        "grunt-contrib-uglify": "^3.1.0",
+        "grunt-contrib-watch": "^1.0.0",
+        "grunt-electron-packager": "^0.1.1",
+        "grunt-sass": "^2.0.0"
+    },
+    "scripts": {
+        "dist": "grunt release && electron-builder",
+        "postinstall": "electron-builder install-app-deps"
+    },
+    "build": {
+        "appId": "com.vmeron.chalk",
+        "directories": {
+            "buildResources": "../build",
+            "output": "../release"
+        },
+        "mac": {
+
+        },
+        "deb": {
+
+        }
+    }
 }

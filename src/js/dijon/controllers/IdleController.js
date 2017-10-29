@@ -47,6 +47,8 @@
                         return;
                     }
 
+                    console.log('Second state : ', self.state);
+
                     if(self.state === self.STATE_ACTIVE && idleTime > maxDuration) {
                         self.state = self.STATE_IDLE;
                         console.log('NOTIFY IDLE');

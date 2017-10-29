@@ -63,7 +63,7 @@
                         result.pop();
                     }
 
-                    self.storageService.set({latestIssues: result});
+                    self.storageService.set('latestIssues', result);
 
                     self.latestIssues = result;
                     self.dump();

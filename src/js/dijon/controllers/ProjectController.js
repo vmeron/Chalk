@@ -8,7 +8,6 @@
             projectView: undefined, //inject
 
             init: function(){
-                console.log('HIHIHI');
                 this.system.mapHandler('Auth:loginSuccess', 'projectController', 'refresh');
                 this.system.mapHandler('Auth:logout', 'projectController', 'reset');
 

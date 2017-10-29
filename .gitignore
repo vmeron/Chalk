@@ -4,3 +4,4 @@ babel
 src/bower_components
 src/node_modules
 src/package-lock.json
+release
