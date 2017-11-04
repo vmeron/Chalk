@@ -68,7 +68,7 @@ module.exports = function (grunt) {
                 src: [
                     'fonts/**',
                     'images/**',
-                    'icons/*',
+                    'icons/**',
                     'locales/**',
                     'background.js',
                     'manifest.json',
@@ -80,10 +80,12 @@ module.exports = function (grunt) {
                 ignore: ['app']
             },
             icons: {
+                /*
                 cwd: 'icons/app',
                 expand: true,
                 src: ['*'],
                 dest: '../build'
+                */
             },
             awesome: {
                 expand: true,
@@ -131,6 +133,9 @@ module.exports = function (grunt) {
             },
             build: {
                 src: ['../build/**', '../babel/**', 'js/class/*-compiled.js']
+            },
+            release: {
+                src: ['../release/**']
             }
         },
 
@@ -222,8 +227,7 @@ module.exports = function (grunt) {
 
             }
         },
-        /*
-        'electron-packager': {
+        /*' electron-packager': {
             mac: {
                 options: function(platform, arch) {
                     var data = {
@@ -245,6 +249,20 @@ module.exports = function (grunt) {
         }*/
     });
 
+    grunt.registerTask('build_package', function() {
+        /*
+        var projectFile = "../build/package.json";
+        if (!grunt.file.exists(projectFile)) {
+            grunt.log.error("file " + projectFile + " not found");
+            return true; //return false to abort the execution
+        }
+        var project = grunt.file.readJSON(projectFile);
+
+        delete project.build;
+        grunt.file.write(projectFile, JSON.stringify(project, null, 2));
+        */
+    });
+
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -256,9 +274,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-symlink');
     grunt.loadNpmTasks('grunt-asar');
+
     //grunt.loadNpmTasks('grunt-electron-packager');
     //grunt.loadNpmTasks('grunt-electron-builder');
 
     grunt.registerTask('default', ['clean', 'sass:build', 'jshint', 'babel', 'copy:babel', 'concat', 'copy:build', 'copy:awesome', 'copy:process', 'symlink', 'watch']);
-    grunt.registerTask('release', ['clean', 'sass:build', 'jshint', 'babel', 'copy:babel', 'concat', 'uglify', 'copy:build', 'copy:awesome', 'copy:icons', 'copy:process', 'copy:node_modules']); //, 'electron-packager:mac:darwin:x64', 'clean']);
+    grunt.registerTask('release', ['clean', 'sass:build', 'jshint', 'babel', 'copy:babel', 'concat', 'uglify', 'copy:build', 'copy:awesome', 'copy:icons', 'copy:process', 'build_package', 'copy:node_modules']); //, 'electron-packager:mac:darwin:x64', 'clean']);
 };

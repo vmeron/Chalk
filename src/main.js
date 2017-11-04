@@ -1,5 +1,3 @@
-var win = 'hoho';
-
 const os = require('os');
 const {app, BrowserWindow, ipcMain, Menu} = require('electron');
 const electron = require('electron');
