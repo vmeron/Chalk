@@ -2,8 +2,6 @@
     'use strict';
 
     ns.controllers.AppController = function () {
-
-
         return {
             system: undefined,
             rmIssueModel: undefined,
@@ -22,17 +20,15 @@
                 $(document).foundation();
 
                 this.appView.init();
+
                 this.system.mapHandler('Auth:loginSuccess', 'appView', 'configHandler');
-                this.system.mapHandler('App:status:active', 'appController', 'activeHandler');
+                //this.system.mapHandler('App:status:active', 'appController', 'idleHandler');
+
+                this.system.mapHandler('Chrono:idle', 'appController', 'idleHandler');
             },
 
-            activeHandler: function() {
+            idleHandler: function() {
                 this.ipcService.send('App:status:active');
-            },
-
-            secondHandler: function() {
-                console.log('TICKING : '+systemIdleTime.getIdleTime());
-
             },
 
             timerCompleteHandler: function(){

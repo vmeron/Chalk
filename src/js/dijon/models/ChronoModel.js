@@ -100,6 +100,7 @@
                 if(this.status == this.STATUS_PLAY)
                 {
                     this.appModel.getIdleTime(function(result){
+                        self.system.notify('Chrono:idle');
                         //Remove idle time from buffer and inject it into idle buffer
                         self.saveBuffer = self.saveBuffer - result * 60;
 
@@ -116,6 +117,7 @@
                 console.log('MODEL ON ACTIVE');
                 if(this.status == this.STATUS_PLAY && this.timeDestination === 'idleBuffer')
                 {
+                    this.system.notify('Chrono:active');
                     this.system.notify('Chrono:pause', false);
                     //TODO :Use IPC to put electron window on the foreground
                     //chrome.app.window.current().show();

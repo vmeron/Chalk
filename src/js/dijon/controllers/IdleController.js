@@ -6,6 +6,7 @@
             system: undefined, //inject
             appModel: undefined, //inject
             idleService: undefined, //inject
+            chronoRunning: false,
 
             interval: undefined,
             momentum: 1000,
@@ -39,15 +40,12 @@
 
                 this.appModel.getIdleTime(function(maxDurationMilli) {
                     self.maxDuration = maxDurationMilli * 1000 * 60;
-                    self.maxDuration = 5000;
                     var maxDuration = self.maxDuration;
                     var idleTime = self.idleService.getIdleTime();
 
                     if(typeof maxDuration == 'undefined') {
                         return;
                     }
-
-                    console.log('Second state : ', self.state);
 
                     if(self.state === self.STATE_ACTIVE && idleTime > maxDuration) {
                         self.state = self.STATE_IDLE;

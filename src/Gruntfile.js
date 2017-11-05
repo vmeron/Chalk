@@ -79,27 +79,12 @@ module.exports = function (grunt) {
                 dest: '../build',
                 ignore: ['app']
             },
-            icons: {
-                /*
-                cwd: 'icons/app',
-                expand: true,
-                src: ['*'],
-                dest: '../build'
-                */
-            },
             awesome: {
                 expand: true,
                 cwd: 'bower_components/font-awesome/fonts',
                 src: ['*'],
                 dest: '../build/fonts/font-awesome/'
             },
-            /*
-            node_modules: {
-                expand: true,
-                cwd: 'node_modules',
-                src: ['**'],
-                dest: '../build/node_modules/'
-            },*/
             process: {
                 expand: true,
                 cwd: 'js/process',
@@ -227,40 +212,6 @@ module.exports = function (grunt) {
 
             }
         },
-        /*' electron-packager': {
-            mac: {
-                options: function(platform, arch) {
-                    var data = {
-                        electronVersion: '1.8.2-beta.1',
-                        name: 'Chalk',
-                        dir: '../build',
-                        icon: './icons/512x512.icns',
-                        platform: platform,
-                        arch: arch,
-                        out: '../release',
-                        asar: true,
-                        overwrite: true,
-                        prune: true
-                    };
-                    console.log('DATA', data);
-                    return data;
-                }
-            }
-        }*/
-    });
-
-    grunt.registerTask('build_package', function() {
-        /*
-        var projectFile = "../build/package.json";
-        if (!grunt.file.exists(projectFile)) {
-            grunt.log.error("file " + projectFile + " not found");
-            return true; //return false to abort the execution
-        }
-        var project = grunt.file.readJSON(projectFile);
-
-        delete project.build;
-        grunt.file.write(projectFile, JSON.stringify(project, null, 2));
-        */
     });
 
     grunt.loadNpmTasks('grunt-sass');
@@ -275,9 +226,31 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-symlink');
     grunt.loadNpmTasks('grunt-asar');
 
-    //grunt.loadNpmTasks('grunt-electron-packager');
-    //grunt.loadNpmTasks('grunt-electron-builder');
+    grunt.registerTask('default', [
+        'clean', 
+        'sass:build', 
+        'jshint', 
+        'babel', 
+        'copy:babel', 
+        'concat', 
+        'copy:build', 
+        'copy:awesome', 
+        'copy:process', 
+        'symlink', 
+        'watch'
+    ]);
 
-    grunt.registerTask('default', ['clean', 'sass:build', 'jshint', 'babel', 'copy:babel', 'concat', 'copy:build', 'copy:awesome', 'copy:process', 'symlink', 'watch']);
-    grunt.registerTask('release', ['clean', 'sass:build', 'jshint', 'babel', 'copy:babel', 'concat', 'uglify', 'copy:build', 'copy:awesome', 'copy:icons', 'copy:process', 'build_package', 'copy:node_modules']); //, 'electron-packager:mac:darwin:x64', 'clean']);
+    grunt.registerTask('release', [
+        'clean', 
+        'sass:build', 
+        'jshint', 
+        'babel', 
+        'copy:babel', 
+        'concat', 
+        'uglify', 
+        'copy:build', 
+        'copy:awesome', 
+        'copy:process', 
+        'copy:node_modules'
+    ]);
 };
