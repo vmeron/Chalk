@@ -29,11 +29,15 @@
                 var self = this;
 
                 this.storageService.get('latestIssues', function(storage){
-                    var latestIssues = storage.issues;
+                    var latestIssues;
 
-                    if(self._.isEmpty(latestIssues))
+                    if(storage === null || self._.isEmpty(storage.issues))
                     {
                         latestIssues = [];
+                    }
+                    else 
+                    {
+                        latestIssues = storage.issues;
                     }
 
                     self.latestIssues = latestIssues;
