@@ -28,14 +28,15 @@
             refresh: function(){
                 var self = this;
 
-                this.storageService.get('latestIssues', function(latestIssues){
+                this.storageService.get('latestIssues', function(storage){
+                    var latestIssues = storage.issues;
+
                     if(self._.isEmpty(latestIssues))
                     {
                         latestIssues = [];
                     }
 
                     self.latestIssues = latestIssues;
-
                     self.system.notify('LatestIssues:refresh:success');
                 });
             },
@@ -44,28 +45,29 @@
                 var self = this;
 
                 this.storageService.get('latestIssues', function(result){
-                    if(typeof result === 'undefined' || result === null || !result.hasOwnProperty('latestIssues'))
+                    if(typeof result === 'undefined' || result === null)
                     {
-                        result = [];
-                    }
-                    else
-                    {
-                        result = result.latestIssues;
+                        result = {
+                            issues: []
+                        };
                     }
 
+                    var issues = result.issues;
 
-                    result = self.removeDuplicates(issue, result);
+                    issues = self.removeDuplicates(issue, issues);
 
-                    result.unshift(issue);
+                    issues.unshift(issue);
 
-                    if(result.length > self.MAX_LATEST)
+                    if(issues.length > self.MAX_LATEST)
                     {
-                        result.pop();
+                        issues.pop();
                     }
+
+                    result.issues = issues;
 
                     self.storageService.set('latestIssues', result);
 
-                    self.latestIssues = result;
+                    self.latestIssues = result.issues;
                     self.dump();
 
                     self.system.notify('LatestIssues:add:success');

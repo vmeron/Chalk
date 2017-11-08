@@ -7,27 +7,58 @@ const storage = require('electron-json-storage');
 const storageListeners = require('./js/process/listeners/storage.js').ipcListeners;
 const _ = require('lodash');
 const windowHelper = require('./js/process/helpers/window.js');
-const autoUpdater = require("electron-updater").autoUpdater
+const autoUpdater = require("electron-updater").autoUpdater;
+const log = require('electron-log');
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = "debug";
+//autoUpdater.allowPrerelease = true;
+//autoUpdater.allowDowngrade = true;
 
 //Debug mode
 const ENV_DEBUG = process.argv.indexOf('--dev') > -1;
-
-autoUpdater.checkForUpdatesAndNotify();
+const STORAGE_CLEAR = process.argv.indexOf('--clear') > -1;
 
 //console.log('Data path : ', storage.getDataPath());
 //storage.setDataPath(os.tmpdir());
 
-/*
-storage.clear(function(error) {
-    if(error) {
-        throw error;
-    }
-});
-*/
+if(STORAGE_CLEAR) {
+    storage.clear(function(error) {
+        if(error) {
+            throw error;
+        }
+    });
+}
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 
+autoUpdater.on('checking-for-update', function() {
+  log.debug('Checking for update...');
+});
 
+autoUpdater.on('update-available', function(info) {
+  log.debug('Update available.');
+});
+
+autoUpdater.on('update-not-available', function(info) {
+  log.debug('Update not available.');
+});
+
+autoUpdater.on('error', function(err) {
+  log.debug('Error in auto-updater. ' + err);
+});
+
+autoUpdater.on('download-progress', function(progressObj) {
+  var log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  log.debug(log_message);
+});
+
+autoUpdater.on('update-downloaded', function(info) {
+  log.debug('Update downloaded');
+});
 
 function createWindow () {
     var area = electron.screen.getPrimaryDisplay().workArea;
@@ -125,7 +156,7 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', function() {
-    console.log('On ready');
+    //autoUpdater.checkForUpdatesAndNotify();
     createWindow();
 });
 
