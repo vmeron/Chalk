@@ -9,7 +9,7 @@
             system:undefined,
             configUtils: undefined,
             templateService: undefined,
-            
+
             add: function(data){
                 var content = this.templateService.parse(data.templateHtml, data.templateData);
                 var configId = this.configUtils.getDomId(data.id);
@@ -18,9 +18,9 @@
                     label: data.label,
                     content: content
                 });
-                
+
                 $configPlaceholder.append(html);
-                
+
                 if(typeof data.callback !== 'undefined')
                 {
                     this.configUtils.read(data.id, function(result){
@@ -28,7 +28,7 @@
                     });
                 }
             },
-            
+
             reset:function(){
                 $configPlaceholder.html('');
             }

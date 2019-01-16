@@ -1,57 +1,49 @@
 class Timer {
-    constructor()
-    {
+    constructor() {
         this.durationLeft = 0;
         this.isCanceled = false;
         this.timerID = null;
         this.momentum = 100;
         this.TIMER_COMPLETE = 'timerEvent';
         this.TIMER_CANCEL = 'timerStop';
+        this.TIMER_TICK = 'timerTick';
     }
 
-    start(duration)
-    {
+    start(duration) {
         this.isCanceled = false;
         this.durationLeft = parseInt(duration);
-        var _this = this;
+        var self = this;
 
         var handler = function(){
-            if(_this.durationLeft <= 0 || _this.isCanceled)
-            {
-                if(_this.isCanceled)
-                {
-                    _this.cancelHandler();
+            if(self.durationLeft <= 0 || self.isCanceled) {
+                if(self.isCanceled) {
+                    self.cancelHandler();
                 }
-                else
-                {
-                    _this.completeHandler();
+                else {
+                    self.completeHandler();
                 }
             }
 
-            _this.durationLeft -= _this.momentum;
-        }
+            self.durationLeft -= self.momentum;
+        };
 
-        if(!this.timerID)
-        {
-            this.timerID = setInterval(handler, _this.momentum);
+        if(!this.timerID) {
+            this.timerID = setInterval(handler, self.momentum);
         }
     }
 
-    completeHandler()
-    {
+    completeHandler() {
         this.durationLeft = 0;
         clearInterval(this.timerID);
         this.timerID = null;
-        $(this).trigger(this.TIMER_COMPLETE)
+        $(this).trigger(this.TIMER_COMPLETE);
     }
 
-    cancel()
-    {
+    cancel() {
         this.isCanceled = true;
     }
 
-    cancelHandler()
-    {
+    cancelHandler() {
         this.durationLeft = 0;
         clearInterval(this.timerID);
         this.timerID = null;

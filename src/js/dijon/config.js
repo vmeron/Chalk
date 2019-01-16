@@ -14,7 +14,7 @@ var chalk = {};
 
             setup: function () {
                 this.system.autoMapOutlets = true;
-                
+
                 //Controllers
                 this.system.mapSingleton('appController', ns.controllers.AppController);
                 this.system.mapSingleton('themeController', ns.controllers.ThemeController);
@@ -31,7 +31,8 @@ var chalk = {};
                 this.system.mapSingleton('translateController', ns.controllers.TranslateController);
                 this.system.mapSingleton('languageController', ns.controllers.LanguageController);
                 this.system.mapSingleton('userController', ns.controllers.UserController);
-                
+                this.system.mapSingleton('idleController', ns.controllers.IdleController);
+
                 //Services
                 this.system.mapSingleton('loaderService', ns.services.LoaderService);
                 this.system.mapSingleton('cacheService', ns.services.CacheService);
@@ -43,7 +44,11 @@ var chalk = {};
                 this.system.mapSingleton('templateService', ns.services.TemplateService);
                 this.system.mapSingleton('errorService', ns.services.ErrorService);
                 this.system.mapSingleton('timerService', ns.services.TimerService);
-                
+                this.system.mapSingleton('ipcService', ns.services.IpcService);
+                this.system.mapSingleton('_', ns.services.LodashService);
+                this.system.mapSingleton('openService', ns.services.OpenService);
+                this.system.mapSingleton('idleService', ns.services.IdleService);
+
                 //Models
                 this.system.mapSingleton('rmProjectModel', ns.models.RmProjectModel);
                 this.system.mapSingleton('themeModel', ns.models.ThemeModel);
@@ -57,7 +62,7 @@ var chalk = {};
                 this.system.mapSingleton('latestIssuesModel', ns.models.LatestIssuesModel);
                 this.system.mapSingleton('languageModel', ns.models.LanguageModel);
                 this.system.mapSingleton('appModel', ns.models.AppModel);
- 
+
                 //Views
                 this.system.mapSingleton('loginFormView', ns.views.LoginFormView);
                 this.system.mapSingleton('projectView', ns.views.ProjectView);
@@ -79,11 +84,10 @@ var chalk = {};
                 this.system.mapSingleton('loader', ns.utils.Loader);
                 this.system.mapSingleton('time', ns.utils.Time);
                 this.system.mapSingleton('configUtils', ns.utils.ConfigUtils);
+                this.system.mapSingleton('stringUtils', ns.utils.StringUtils);
+                this.system.mapSingleton('processUtils', ns.utils.ProcessUtils);
 
                 //Handlers
-                this.system.mapHandler('App:startupComplete', 'translateController', 'init');
-                
-                this.system.mapHandler('Translate:ready', 'authService', 'login');
                 this.system.mapHandler('Translate:ready', 'configController', 'init');
                 this.system.mapHandler('Translate:ready', 'notificationController', 'init');
                 this.system.mapHandler('Translate:ready', 'projectController', 'init');
@@ -98,11 +102,15 @@ var chalk = {};
                 this.system.mapHandler('Translate:ready', 'themeController', 'init');
                 this.system.mapHandler('Translate:ready', 'userController', 'init');
                 this.system.mapHandler('Translate:ready', 'appController', 'init');
-                
+                this.system.mapHandler('Translate:ready', 'idleController', 'init');
+
                 this.system.mapHandler('Auth:loginRequired', 'loginFormView', 'showLoginForm');
                 this.system.mapHandler('Auth:loginSuccess', 'loginFormView', 'hideLoginForm');
                 this.system.mapHandler('Auth:loginSuccess', 'rmActivityModel', 'refresh');
                 this.system.mapHandler('Auth:logout', 'authService', 'logout');
+
+                this.system.mapHandler('Translate:ready', 'authService', 'login');
+                this.system.mapHandler('App:startupComplete', 'translateController', 'init');
             }
         };
     };

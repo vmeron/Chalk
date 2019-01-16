@@ -9,13 +9,13 @@ module.exports = function (grunt) {
                     'bower_components/datatables/media/css',
                     'bower_components/font-awesome/scss',
                     'bower_components/AmaranJS/dist/css',
-                    'bower_components/select2/',
+                    'bower_components',
                 ],
                 imagePath: '/foundation'
             },
             build: {
                 options: {
-                    outputStyle: 'compressed',
+                    /*outputStyle: 'compressed',*/
                     imagePath: '/images'
                 },
                 files: {
@@ -25,7 +25,7 @@ module.exports = function (grunt) {
                 }
             }
         },
-        
+
         watch: {
             grunt: {
                 files: ['Gruntfile.js']
@@ -35,22 +35,23 @@ module.exports = function (grunt) {
                 tasks: ['sass:build']
             },
             js: {
-                files: ['js/*/**/*.js'],
-                tasks: ['babel', 'concat']
+                files: ['js/*/**/*.js', 'main.js'],
+                tasks: ['copy:babel', 'babel', 'concat', 'copy:process']
             },
             copy: {
-                files: ['locales/**', 'fonts/**', 'images/**', 'background.js', 'window.html'],
-                tasks: ['copy']
+                files: ['locales/**', 'fonts/**', 'images/**', 'background.js', 'window.html', 'main.js'],
+                tasks: ['copy:build', 'copy:awesome', 'copy:process', 'symlink']
             }
         },
-        
+
         babel: {
             options: {
-                sourceMap: true
+                sourceMap: false,
+                presets: ['env']
             },
             build: {
                 files: {
-                    '../babel/class/Timer.js': '../babel/class/Timer.js'
+                    '../build/js/class/Timer.js': 'js/class/Timer.js'
                 }
             }
         },
@@ -59,8 +60,8 @@ module.exports = function (grunt) {
             babel: {
                 expand: true,
                 cwd: 'js',
-                src: ['class/*.js'],
-                dest: '../babel/'
+                src: ['class/*-compiled.js'],
+                dest: '../build'
             },
             build: {
                 expand: true,
@@ -71,16 +72,43 @@ module.exports = function (grunt) {
                     'locales/**',
                     'background.js',
                     'manifest.json',
-                    'window.html'
+                    'window.html',
+                    'package.json',
+                    'main.js'
                 ],
-                dest: '../build'
+                dest: '../build',
+                ignore: ['app']
             },
             awesome: {
                 expand: true,
                 cwd: 'bower_components/font-awesome/fonts',
                 src: ['*'],
-                dest: '../build/fonts/font-awesome/',
-                
+                dest: '../build/fonts/font-awesome/'
+            },
+            process: {
+                expand: true,
+                cwd: 'js/process',
+                src: ['**'],
+                dest: '../build/js/process'
+            },
+
+            node_modules: {
+                expand: true,
+                src: ['node_modules/**'],
+                dest: '../build'
+            }
+        },
+
+        symlink: {
+            options: {
+                // Enable overwrite to delete symlinks before recreating them
+                overwrite: true,
+                // Enable force to overwrite symlinks outside the current working directory
+                force: true
+            },
+            node_modules: {
+                src: 'node_modules',
+                dest: '../build/node_modules'
             }
         },
 
@@ -89,7 +117,10 @@ module.exports = function (grunt) {
                 force: true,
             },
             build: {
-                src: ['../build/**', '../babel/**']
+                src: ['../build/**', '../babel/**', 'js/class/*-compiled.js']
+            },
+            release: {
+                src: ['../release/**']
             }
         },
 
@@ -158,7 +189,7 @@ module.exports = function (grunt) {
             release: {
                 options: {
                     archive: function(){
-                        var pack = grunt.file.readJSON('package.json')
+                        var pack = grunt.file.readJSON('package.json');
                         return '../dist/'+pack.name+'-'+pack.version+'.zip';
                     },
                     mode: 'zip'
@@ -172,7 +203,15 @@ module.exports = function (grunt) {
                     }
                 ]
             }
-        }
+        },
+        asar: {
+            release: {
+                cwd: '../',
+                src: ['build'],
+                dest: 'make/app.asar'
+
+            }
+        },
     });
 
     grunt.loadNpmTasks('grunt-sass');
@@ -184,7 +223,34 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-symlink');
+    grunt.loadNpmTasks('grunt-asar');
 
-    grunt.registerTask('default', ['clean', 'sass:build', 'jshint', 'copy:babel', 'babel', 'concat', 'copy:build', 'copy:awesome', 'watch']);
-    grunt.registerTask('release', ['clean', 'sass:build', 'jshint', 'copy:babel', 'babel', 'concat', 'uglify', 'copy:build', 'copy:awesome', 'compress:release', 'clean']);
+    grunt.registerTask('default', [
+        'clean', 
+        'sass:build', 
+        'jshint', 
+        'babel', 
+        'copy:babel', 
+        'concat', 
+        'copy:build', 
+        'copy:awesome', 
+        'copy:process', 
+        'symlink', 
+        'watch'
+    ]);
+
+    grunt.registerTask('release', [
+        'clean', 
+        'sass:build', 
+        'jshint', 
+        'babel', 
+        'copy:babel', 
+        'concat', 
+        'uglify', 
+        'copy:build', 
+        'copy:awesome', 
+        'copy:process', 
+        'copy:node_modules'
+    ]);
 };

@@ -3,15 +3,13 @@
   "dependencies": {
     "foundation": "zurb/bower-foundation",
     "animate-sass": "0.6.2",
-    "AmaranJS": "https://github.com/hakanersu/AmaranJS.git#~0.5.4",
-    "Ashe": "https://github.com/dfsq/Ashe.git",
+    "amaranJS": "https://github.com/hakanersu/AmaranJS.git#~0.5.4",
+    "ashe": "https://github.com/dfsq/Ashe.git",
     "datatables": "https://github.com/DataTables/DataTables.git#~1.10.9",
     "dijon": "https://github.com/creynders/dijon.git#~0.6.2",
     "font-awesome": "https://github.com/FortAwesome/Font-Awesome.git#~4.4.0",
     "i18next": "https://github.com/i18next/i18next.git#~1.10.2",
-    "jquery.rest": "https://github.com/jpillora/jquery.rest.git#~1.0.2"
-  },
-  "devDependencies": {
-    "select2": "https://github.com/select2/select2.git#~4.0.0"
+    "jquery.rest": "https://github.com/jpillora/jquery.rest.git#~1.0.2",
+    "select2": "https://github.com/select2/select2.git#~4.0.3"
   }
 }

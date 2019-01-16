@@ -17,7 +17,7 @@ The frontend relies on [Foundation], the backend on [dijon] javascript DI micro 
 
 ## Installation
 
-You will need [npm](http://www.npmjs.org) and [bower](http://bower.io) in order to be able to build the app. 
+You will need [npm](http://www.npmjs.org) and [bower](http://bower.io) in order to be able to build the app.
 Once both are installed :
 
 ```bash
@@ -27,7 +27,9 @@ bower install
 
 ## Build
 
-Grunt is used to build the app, the default action will move all the assets in the build folder and watch for changes.
+Grunt is used make the app build, the default action will move all the assets in the build folder and watch for changes.
+To run the app, you simply have to run `electron build` from the project root.
+You might need to make an `npm rebuild --from-source` inside the src folder to force recompile some libs for your system.
 
 `grunt` : Creates a test build in the /build folder that you can use as an unpackaged app in chrome
 
@@ -35,17 +37,24 @@ Grunt is used to build the app, the default action will move all the assets in t
 
 `grunt clean` : Removes the  build/ and babel/ folders
 
+## Package
+
+Use electron-packager from the root folder with the following command : 
+```bash
+electron-packager build --icon=src/icons/512x512.icns --overwrite --platform=darwin --arch=x64  --prune=true --out=release-builds
+```
+
 ## Contributing
 
 Feel free to contribute if you have improvements in mind. However, I do not want this project to become an desktop version of redmine.
 
-This app is built solely on the redmine API and does not rely on any server-side plugin, I would like to keep it this way. 
+This app is built solely on the redmine API and does not rely on any server-side plugin, I would like to keep it this way.
 
 Translations can be found in the src/locales folder and are based on [i18next]. Feel free to bring your own.
 
 ## Libraries
 
-Chalk is built with the help of these fabulous libs : 
+Chalk is built with the help of these fabulous libs :
 
 - [dijon]
 - [foundation]

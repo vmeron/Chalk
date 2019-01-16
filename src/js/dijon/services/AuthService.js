@@ -6,10 +6,11 @@
             system: undefined, //inject
             storageService: undefined, //inject
             notificationService: undefined,
+            _: undefined, //inject
 
             gateway: undefined,
             apiKey: undefined,
-            
+
             registerCredentials: function(gateway, apiKey){
                 var self = this;
                 gateway = gateway.toLowerCase();
@@ -26,37 +27,36 @@
                     return;
                 }
 
-                this.storageService.set({
+                this.storageService.set('credentials', {
                     gateway: gateway,
                     apiKey: apiKey
                 }, function(){
                     self.gateway = gateway;
                     self.apiKey = apiKey;
+
                     self.login();
                 });
             },
-            
+
             login: function () {
                 var self = this;
-                
-                this.storageService.get('apiKey', function(apiKey){
-                    if(typeof apiKey.apiKey === 'undefined')
+
+                this.storageService.get('credentials', function(credentials){
+                    if(self._.isEmpty(credentials))
                     {
                         self.system.notify('Auth:logout');
                         self.system.notify('Auth:loginRequired');
                     }
                     else
                     {
-                        self.storageService.get('gateway', function(gateway){
-                            self.gateway = gateway.gateway;
-                            self.apiKey = apiKey.apiKey;
-
-                            self.system.notify('Auth:loginSuccess');
-                        });
+                        self.gateway = credentials.gateway;
+                        self.apiKey = credentials.apiKey;
+                        
+                        self.system.notify('Auth:loginSuccess');
                     }
                 });
             },
-            
+
             logout: function () {
                 this.gateway = '';
                 this.apiKey = '';

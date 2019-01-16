@@ -1,11 +1,11 @@
 (function (ns) {
     'use strict';
-    
+
     ns.views.ChronoView = function () {
         var $chrono = $('#chrono');
         var $activityPlaceholder = $('#chrono #activityPlaceholder');
         var activityTemplate = $('#selectTemplate').html();
-        
+
         var $idleStatus = $('#idleStatus');
         var $activeStatus = $('#activeStatus');
 
@@ -19,12 +19,13 @@
             configUtils: undefined,
             templateService: undefined,
             authService: undefined,
+            openService: undefined,
 
             status: undefined,
-            
+
             STATUS_PLAY: 'play',
             STATUS_PAUSE: 'pause',
-            
+
             setup: function(){
                 var self = this;
                 this.status = this.STATUS_PAUSE;
@@ -42,21 +43,26 @@
                     ev.preventDefault();
                     self.system.notify('App:status:active');
                 });
-               
+
                 $chrono.on('click', '.close-reveal-modal', function(){
                     self.system.notify('Chrono:stop');
                 });
-                
+
                 $chrono.on('click', '#yes', function(ev){
                     ev.preventDefault();
                     self.hideMessage();
                     self.chronoModel.postTime('idleBuffer');
                 });
-                
+
                 $chrono.on('click', '#no', function(ev){
                     ev.preventDefault();
                     self.hideMessage();
                     self.chronoModel.emptyBuffer('idleBuffer');
+                });
+
+                $chrono.on('click', '.title a', function(event) {
+                    event.preventDefault();
+                    self.openService.open($(this).attr('href'));
                 });
 
                 $(document).on('closed.fndtn.reveal', '#chrono', function(){
@@ -67,7 +73,7 @@
 
             /**
              * Init chrono
-             * 
+             *
              * @param {
              *  type: string('issue', 'project'),
              *  data: {}
@@ -85,19 +91,19 @@
                     case this.rmProjectModel.TYPE:
                         title = data.name;
                         break;
-                        
+
                     case this.rmIssueModel.TYPE:
                         title = '<a target="_blank" href="'+this.authService.gateway+'/issues/'+data.id+'">#'+data.id+'</a> '+data.subject+' ['+data.priority.name+']';
                         author = data.author.name;
                         break;
                 }
-                
+
                 $chrono.find('.project').text(projectName);
                 $chrono.find('.title').html(title);
                 $chrono.find('.description').text(description);
                 $chrono.find('.author').text(author);
                 this.updateActivity();
-                
+
                 this.show();
             },
 
@@ -111,15 +117,15 @@
                     this.play();
                 }
             },
-            
+
             play: function(){
                 this.changeStatus(this.STATUS_PLAY);
             },
-            
+
             pause: function(){
                 this.changeStatus(this.STATUS_PAUSE);
             },
-            
+
             reset: function(){
                 this.cancel();
 
@@ -128,19 +134,19 @@
                 $chrono.find('.author').text('');
                 $chrono.find('.timer').text('00:00:00');
             },
-            
+
             cancel: function(){
-                console.log('ON CANCEL');
+                console.log('ON CHRONO CANCEL');
                 this.status = this.STATUS_PAUSE;
                 this.updateButton(this.status);
                 this.updateActivity();
             },
-            
+
             activityError: function(){
                 var delay = 200;
                 $activityPlaceholder.stop().fadeIn(delay).fadeOut(delay).fadeIn(delay).fadeOut(delay).fadeIn(delay).fadeOut(delay).fadeIn(delay);
             },
-            
+
             /**
              * De-init chrono
              */
@@ -151,7 +157,7 @@
 
             changeStatus: function(newStatus, notify){
                 console.log('STATUS CHANGE');
-                
+
                 if(typeof notify === 'undefined')
                 {
                     notify = true;
@@ -160,27 +166,27 @@
                 var disableActivity = newStatus == this.STATUS_PLAY;
 
                 $activityPlaceholder.find('select').prop('disabled', disableActivity);
-                
+
                 var notifyEvent = newStatus == this.STATUS_PLAY ? 'Chrono:play' : 'Chrono:pause';
-                
+
                 this.updateButton(newStatus);
-                
+
                 this.status = newStatus;
                 if(notify)
                 {
                     this.system.notify(notifyEvent, activity);
                 }
             },
-            
+
             updateButton: function(status){
                 var removeClass = status == this.STATUS_PLAY ? this.STATUS_PAUSE : this.STATUS_PLAY ;
                 var newText = status == this.STATUS_PLAY ? '<i class="fa fa-pause"></i>' : '<i class="fa fa-play"></i>' ;
-                
+
                 $chrono.find('.control').addClass(status)
                     .removeClass(removeClass)
                     .find('a').html(newText);
             },
-            
+
             update: function(){
                 $chrono.find('.timer').text(this.time.formatted(this.chronoModel.currentTime));
 
@@ -199,9 +205,9 @@
                             defaultOption: 'chrono.choose',
                             defaultValue: defaultValue
                         });
-                        
+
                         $activityPlaceholder.html(html);
-                        
+
                         if(defaultValue && defaultValue > 0)
                         {
                             $activityPlaceholder.find('select').val(defaultValue);
@@ -209,14 +215,14 @@
                     });
                 });
             },
-            
+
             getCurrentActivity: function(){
                 var activityId = $activityPlaceholder.find('select').val();
-                
+
                 return this.rmActivityModel.getById(activityId);
             },
-            
-            
+
+
             /**
              * On app status change
              */
@@ -227,14 +233,14 @@
                     $chrono.find('.control a').prop('disabled', true);
                 }
             },
-            
+
             active: function(){
                 if(this.chronoModel.status == this.chronoModel.STATUS_PLAY && this.chronoModel.timeDestination === 'idleBuffer')
                 {
                     this.changeStatus(this.STATUS_PAUSE, false);
                 }
             },
-            
+
             /**
              * Display / hide chrono
              */
@@ -250,12 +256,12 @@
                 $chrono.foundation('reveal', 'close');
                 this.system.notify('Chrono:display:hide');
             },
-            
+
             hideMessage: function(){
                 $chrono.find('.alert-box').slideUp();
                 $chrono.find('.control a').prop('disabled', false);
             },
-            
+
             getChronoDom: function()
             {
                 return $chrono;

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Chalk</title>
-        <link rel="stylesheet" id="theme" type="text/css" href="/css/chalk-default.css" media="screen" />
+        <link rel="stylesheet" id="theme" type="text/css" href="css/chalk-default.css" media="screen" />
     </head>
     <body>
         <div class="off-canvas-wrap" data-offcanvas>
@@ -16,7 +16,7 @@
                     <nav class="top-bar" data-topbar role="navigation">
                         <ul class="title-area">
                             <li class="name">
-                                <h1><a href="#"><img src="/icons/chalk-logo-wobg.png" /> Chalk</a></h1>
+                                <h1><a href="#"><img src="icons/chalk-logo-wobg.png" /> Chalk</a></h1>
                             </li>
                         </ul>
 
@@ -45,7 +45,7 @@
 
                     <!-- Latest projects -->
                     <div id="latestPlaceholder"></div>
-                    
+
                     <!-- Project selector -->
                     <div id="projectPlaceholder"></div>
 
@@ -55,12 +55,12 @@
                     <!-- Chrono -->
                     <div id="chronoPlaceholder"></div>
                 </div>
-                
+
                 <!-- close the off-canvas menu -->
                 <a class="exit-off-canvas"></a>
             </div>
         </div>
-        
+
         <!-- Chrono -->
         <div id="chrono" class="reveal-modal" data-reveal>
             <div class="led row">
@@ -90,7 +90,7 @@
         <!-- Loader view -->
         <script id="loaderTemplate" type="html/template">
             <div class="row loader text-center">
-                <p><img src="/images/loader.gif" /> {{message|t}}</p>
+                <p><img src="images/loader.gif" /> {{message|t}}</p>
             </div>
         </script>
 
@@ -110,12 +110,12 @@
             {% if refresh %}
                 </div>
                 <div class="small-1 columns refresh refreshSmall">
-                    <a href="#" class="center postfix"><img src="/images/refresh.png" /></a>
+                    <a href="#" class="center postfix"><img src="images/refresh.png" /></a>
                 </div>
             {% endif %}
             </div>
         </script>
-        
+
         <!-- Issues tab template -->
         <script id="issueTableTemplate" type="html/template">
             <h2>{{label|t}}</h2>
@@ -151,24 +151,25 @@
                 {% endif %}
             </div>
         </script>
-        
+
         <!-- Config templates -->
         <script id="textareaTemplate" type="html/template">
             <label>{{label|t}}</label>
             <textarea class="{{inputClass}}">{{defaultContent}}</textarea>
             {%if buttonLabel%}<button class="{{buttonClass}}">{{buttonLabel|t}}</button>{%endif%}
         </script>
-        
+
         <script id="configLineTemplate" type="html/template">
             <li><label>{{label|t}}</label></li>
-            <li id="{{id}}">{{content}}</li> 
+            <li id="{{id}}">{{content}}</li>
         </script>
-        
+
         <!-- Div -->
         <script id="divTemplate" type="html/template">
             <div id="{{id}}">{{content}}</div>
         </script>
-        
-        <script type="text/javascript" src="/js/chalk.js"></script>
+        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+        <script type="text/javascript" src="js/chalk.js"></script>
+        <script>if (window.module) module = window.module;</script>
     </body>
 </html>

@@ -3,14 +3,15 @@
 
     ns.models.LatestIssuesModel = function () {
         return {
-            system:undefined,
-            storageService: undefined,
-            rmIssueModel: undefined,
-            
+            system:undefined, //inject
+            storageService: undefined, //inject
+            rmIssueModel: undefined, //inject
+            _: undefined, //inject
+
             latestIssues: undefined,
             latest: [],
             MAX_LATEST: 10,
-            
+
             add: function(data){
                 var self = this;
                 if(data && data.hasOwnProperty('issue_id'))
@@ -23,54 +24,56 @@
                     });
                 }
             },
-            
+
             refresh: function(){
                 var self = this;
-                
-                this.storageService.get('latestIssues', function(result){
-                    if(typeof result === 'undefined' || !result.hasOwnProperty('latestIssues'))
+
+                this.storageService.get('latestIssues', function(storage){
+                    var latestIssues;
+
+                    if(storage === null || self._.isEmpty(storage.issues))
                     {
-                        result = [];
+                        latestIssues = [];
                     }
-                    else
+                    else 
                     {
-                        result = result.latestIssues;
+                        latestIssues = storage.issues;
                     }
-                    
-                    self.latestIssues = result;
-                    
+
+                    self.latestIssues = latestIssues;
                     self.system.notify('LatestIssues:refresh:success');
                 });
             },
-            
+
             push: function(issue){
                 var self = this;
 
                 this.storageService.get('latestIssues', function(result){
-                    if(typeof result === 'undefined' || !result.hasOwnProperty('latestIssues'))
+                    if(typeof result === 'undefined' || result === null)
                     {
-                        result = [];
-                    }
-                    else
-                    {
-                        result = result.latestIssues;
+                        result = {
+                            issues: []
+                        };
                     }
 
+                    var issues = result.issues;
 
-                    result = self.removeDuplicates(issue, result);
-                    
-                    result.unshift(issue);
+                    issues = self.removeDuplicates(issue, issues);
 
-                    if(result.length > self.MAX_LATEST)
+                    issues.unshift(issue);
+
+                    if(issues.length > self.MAX_LATEST)
                     {
-                        result.pop();
+                        issues.pop();
                     }
-                    
-                    self.storageService.set({latestIssues: result});
-                    
-                    self.latestIssues = result;
+
+                    result.issues = issues;
+
+                    self.storageService.set('latestIssues', result);
+
+                    self.latestIssues = result.issues;
                     self.dump();
-                    
+
                     self.system.notify('LatestIssues:add:success');
                 });
             },
@@ -94,7 +97,7 @@
                 this.latest = [];
                 this.latestIssues = undefined;
             },
-            
+
             dump: function(){
                 for(var i = 0; i < this.latestIssues.length; i++)
                 {
